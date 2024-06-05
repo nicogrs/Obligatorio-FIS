@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<% const current_page = 'tabla_choferes' %>
+<%- include('./partials/header.ejs') %>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <%- include("./partials/nav.ejs",  { selected: current_page }) %>
+      <div class="col-md-9 ms-sm-auto col-lg-10 px-md-1">
+
+        <div class="row m-3">
+          <table class="table align-middle table-bordered table-hover" id="tablaChoferes">
+            <% if (listaChoferes.length > 0) { %>
+              <thead class="text-bg-dark text-white">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Edad</th>
+                  <th>Sociedad</th>
+                  <th>Télefono</th>
+                </tr>
+              </thead>
+              <tbody id="tabla_body">
+                <% listaChoferes.forEach(item => { %>
+                    <tr>
+                    <td><%= item.id %></td>
+                    <td><%= item.nombre %></td>
+                    <td><%= item.edad %> </td>
+                    <td><%= item.sociedad %></td>
+                    <td><%= item.telefono %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+              <% } else { %>
+                <p>Nada que mostrar</p>
+              <% } %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/common_footer.ejs', {current_page: current_page}) %>
+
+</body>

@@ -1,0 +1,57 @@
+<!-- Barra lateral -->
+<button class="d-md-none d-lg-none navbar text-bg-dark ml-auto" type="button" data-bs-toggle="collapse"
+  data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <span>
+    <i class="px-3 fas fa-bars fa-2x"></i><!-- Icono hamburguesa  -->
+  </span>
+</button>
+
+<div class="sidebar hv-100 fixed-top col-md-2 p-3 collapse navbar-expand-lg" id="navbarNav">
+  <!-- Contenido de la barra lateral aquí -->
+<a href="/" class="d-flex flex-column align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <div>
+        <img id="logo" src="public/img/logo.png" alt="Logo" class="img-fluid mr-2" style="max-width: auto; height: auto;">
+    </div>
+    <span class="fs-5">NP TRANSPORTES</span>
+</a>
+  <hr />
+  <!-- Botones de barra lateral -->
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <% if (selected=='inicio' ) { %>
+        <a href="/" class="nav-link active" aria-current="page" style="background-color: #0f5a00;">INICIO</a>
+        <% } else { %>
+          <a href="/" class="nav-link text-white" aria-current="page">INICIO</a>
+          <% } %>
+    </li>
+    <li class="nav-item">
+      <% if (selected=='crear_trabajo' ) { %>
+        <a href="../trabajo" class="nav-link active" style="background-color: #0f5a00;">CREAR TRABAJO</a>
+        <% } else { %>
+          <a href="../trabajo" class="nav-link text-white">CREAR TRABAJO</a>
+          <% } %>
+    </li>
+    <li class="nav-item">
+      <% if (selected=='buscador_trabajo' ) { %>
+        <a href="../buscador_trabajo" class="nav-link active" style="background-color: #0f5a00;">BUSCAR TRABAJO</a>
+        <% } else { %>
+          <a href="../buscador_trabajo" class="nav-link text-white">BUSCAR TRABAJO</a>
+          <% } %>
+    </li>
+    <li class="nav-item">
+      <% if (selected=='tabla_camiones' ) { %>
+        <a href="../tabla_camiones" class="nav-link active" style="background-color: #0f5a00;">CAMIONES</a>
+        <% } else { %>
+          <a href="../tabla_camiones" class="nav-link text-white">CAMIONES</a>
+          <% } %>
+    </li>
+    <li class="nav-item">
+      <% if (selected=='tabla_choferes' ) { %>
+        <a href="../tabla_choferes" class="nav-link active" style="background-color: #0f5a00;">CHOFERES</a>
+        <% } else { %>
+          <a href="../tabla_choferes" class="nav-link text-white">CHOFERES</a>
+          <% } %>
+    </li>
+  </ul>
+  <hr />
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<% const current_page = 'inicio' %>
+<%- include("./partials/header.ejs") %>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+
+      <%- include("./partials/nav.ejs",  { selected: current_page }) %>
+
+      <!-- Contenido principal -->
+      <div class="col-md-9 ms-sm-auto col-lg-10 px-md-1">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <!-- Contenido principal aquí -->
+          <div class="container-fluid">
+            <div class="row">
+              <% if(mensajeError !== ''){ %>
+                <div class="alert alert-danger" role="alert">
+                  <strong>Error!</strong> <%= mensajeError %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              <% } %>
+              <% if(mensajeExito != ''){%>
+                <div class="alert alert-success" role="alert">
+                  Exito! <%= mensajeExito %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              <% } %>
+              <div class="col-lg-6 col-md-12">
+                <!-- Tarjetas en pendiente -->
+                <div class="container-fluid">
+                  <h2 class="text-decoration-none align-items-center mb-3">Planificado</h2>
+                    <div class="row">
+                      <% trabajosPendientes.forEach(item => { %>
+                        <%- include("./partials/tarjeta.ejs",  { item: item }); %>
+                      <% }) %>
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12">
+                <!-- Tarjetas en proceso -->
+                <div class="container-fluid">
+                  <h2 class="text-decoration-none align-items-center mb-3">En curso</h2>
+                  <div class="row">
+                    <% trabajosEnProceso.forEach(item => { %>
+                      <%- include("./partials/tarjeta.ejs",  { item: item }); %>
+                    <% }) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include("./partials/common_footer.ejs",  { current_page: current_page }) %>
+</body>
+
+</html>

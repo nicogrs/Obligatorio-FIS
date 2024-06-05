@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<% const current_page = 'crear_trabajo' %>
+<%- include('./partials/header.ejs') %>
+<body>
+  <div class="container-fluid position-relative">
+    <div class="row">
+      <%- include("./partials/nav.ejs", { selected: current_page }) %>
+      <div class="col-md-9 ms-sm-auto col-lg-10 px-md-1">
+
+        <!-- Agregado -->
+        <div id="alert_div" style="display: none;">
+          <!-- <div id="alert_error" style="display: none" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div> -->
+        </div>
+
+        <!-- Agregado -->
+        
+        
+        <div id="formulario" class="row mx-auto justify-content-center border border-0 bg-light rounded m-3 p-3 w-75">
+          <h1 class="text-center m-3">Crear Trabajo</h1>  
+          <!-- seleccion tipo trabajo -->
+            <label for="tipoTrabajo" class="form-label mt-2">Seleccionar trabajo:</label>
+            <select id="tipoTrabajo" name="tipo" class="form-select m-2" aria-label="Seleccion trabajo">
+              <option value="seleccionar" selected>Seleccionar</option>
+              <option value="flete">Flete</option>
+              <option value="reparto">Reparto</option>
+            </select>
+    
+            <!-- Alta Flete -->
+            <div id="fleteContent">
+              <form id="form_alta_flete">
+                <!-- Contenido específico para flete -->
+                <div class="mb-3">
+                  <label for="fleteNomCliente" class="form-label">Nombre Cliente:</label>
+                  <input type="text" name="flete_nomCliente" class="form-control" id="fleteNomCliente" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="fleteDireccionIni" class="form-label">Direccion Cliente:</label>
+                  <input type="text" name="flete_direccionIni" class="form-control" id="fleteDireccionIni" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="fleteDireccionFin" class="form-label">Direccion destino:</label>
+                  <input type="text" name="flete_direccionFin" class="form-control" id="fleteDireccionFin" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="fechaFleteIni" class="form-label">Fecha Incio</label>
+                  <input type="date" min="" name="flete_fechaIni" class="form-control" id="fechaFleteIni" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="horaFleteIni" class="form-label">Hora Inicio</label>
+                  <input type="time" name="flete_horaIni" class="form-control" id="horaFleteIni" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="fechaFleteFin" class="form-label">Fecha Fin</label>
+                  <input type="date" name="flete_fechaFin" class="form-control" id="fechaFleteFin" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="horaFleteFin" class="form-label">Hora Fin</label>
+                  <input type="time" name="flete_horaFin" class="form-control" id="horaFleteFin" required />
+                </div>
+            
+                <div class="mb-3">
+                  <label for="camionFlete" class="form-label">Camión</label>
+                  <select class="form-select" name="flete_camion" id="camionFlete">
+                    <% if (listaCamiones.length> 0) { %>
+                      <% listaCamiones.forEach(camion => { %>
+                        <option value="<%= camion.id %>">
+                          <%= camion.toString() %>
+                        </option>
+                      <% }); %>
+                    <% } %>
+                  </select>
+                </div>
+            
+                <div class="mb-3">
+                  <label for="conductorFlete" class="form-label">Conductor</label>
+                  <select class="form-select" name="flete_chofer" id="conductorFlete">
+                    <% if (listaChoferes.length> 0) { %>
+                      <% listaChoferes.forEach(chofer => { %>
+                        <option value="<%= chofer.id %>">
+                          <%= chofer.toString() %>
+                        </option>
+                      <% }); %>
+                    <% } %>
+                  </select>
+                </div>
+            
+                <div class="mb-3">
+                  <label for="descripcionFlete" class="form-label">Descripción</label>
+                  <textarea class="form-control" name="flete_desc" id="descripcionFlete" rows="3"></textarea>
+                </div>
+            
+                <div class="modal-footer">
+                  <div class="m-2">
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                  </div>
+                  <div>
+                    <button type="button" id="abrirModalFlete" class="btn btn-primary" 
+                    >Aplicar</button>
+                  </div>
+                </div>
+
+                <div class="modal fade bd-example-modal-sm" id="confirmarModalFlete" 
+                tabindex="-1" role="dialog" aria-hidden="false">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ¿Desea aplicar los cambios?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                        <button type="button" id="submit_flete" data-bs-dismiss="modal" class="btn btn-primary">Guardar flete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            
+            <!-- Alta Reparto -->
+            <div id="repartoContent">
+              <form id="form_alta_reparto">
+                <!-- Contenido específico para reparto -->
+                <div class="mb-3">
+                  <label for="fechaRepartoIni" class="form-label">Fecha inicio</label>
+                  <input type="date" name="rep_fechaIni" class="form-control" id="fechaRepartoIni" required />
+                </div>
+      
+                <div class="mb-3">
+                  <label for="horaRepartoIni" class="form-label">Hora Inicio</label>
+                  <input type="time" name="rep_horaIni" class="form-control" id="horaRepartoIni" required />
+                </div>
+      
+                <div class="mb-3">
+                  <label for="fechaRepFin" class="form-label">Fecha Fin</label>
+                  <input type="date" name="rep_fechaFin" class="form-control" id="fechaRepFin" required />
+                </div>
+      
+                <div class="mb-3">
+                  <label for="horaRepartoFin" class="form-label">Hora Fin</label>
+                  <input type="time" name="rep_horaFin" class="form-control" id="horaRepartoFin" required />
+                </div>
+
+                <div class="mb-3">
+                  <label for="camionReparto" class="form-label">Camión</label>
+                  <select class="form-select" name="rep_camion" id="camionReparto" required>
+                    <% if (listaCamiones.length > 0) { %>
+                      <% listaCamiones.forEach(camion => { %>
+                        <option value="<%= camion.id %>"><%= camion.toString() %></option>
+                      <% }); %>
+                    <% } %>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="conductorReparto" class="form-label">Conductor</label>
+                  <select class="form-select" name="rep_chofer" id="conductorReparto" required>
+                    <% if (listaChoferes.length > 0) { %>
+                      <% listaChoferes.forEach(chofer => { %>
+                        <option value="<%= chofer.id %>"><%= chofer.toString() %></option>
+                      <% }); %>
+                    <% } %>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcionReparto" class="form-label">Descripción</label>
+                    <textarea class="form-control" name="rep_desc" id="descripcionReparto" rows="3"></textarea>
+                </div>
+
+                <table class="table" id="tablaClientes">
+                  <thead>
+                    <tr>
+                      <th>Nombre del Cliente</th>
+                      <th>Dirección del Cliente</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody id="destinosReparto">
+                    <!-- Aquí se agregarán los destinos dinámicamente -->
+                  </tbody>
+                </table>
+
+                <button type="button" class="btn btn-primary" id="agregarCliente">Agregar Cliente</button>
+
+                <div id="camposDestino" style="display: none;">
+                  <div class="mb-3">
+                    <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
+                    <input type="text" class="form-control" id="nombreCliente"/>
+                  </div>
+                  <div class="mb-3">
+                    <label for="direccionCliente" class="form-label">Dirección del Cliente</label>
+                    <input type="text" class="form-control" id="direccionCliente"/>
+                  </div>
+                  <button type="button" class="btn btn-success" id="agregarDestino">Agregar Destino</button>
+                </div>
+            
+                <div class="modal-footer">
+                  <div class="m-2">
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                  </div>
+                  <div>
+                    <button type="button" id="abrirModalReparto" class="btn btn-primary" 
+                    >Aplicar</button>
+                  </div>
+                </div>
+
+                <div class="modal fade bd-example-modal-sm" id="confirmarModalReparto" 
+                tabindex="-1" role="dialog" aria-hidden="false">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ¿Desea aplicar los cambios?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                        <button type="button" id="submit_reparto" data-bs-dismiss="modal" class="btn btn-primary">Guardar reparto</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+  </div>
+
+  <%- include('./partials/common_footer.ejs', {current_page: current_page}) %>
+
+
+</body>
+
+</html>

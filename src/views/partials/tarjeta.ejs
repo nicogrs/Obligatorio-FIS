@@ -1,0 +1,20 @@
+<div class="col-lg-6 col-md-6 col-sm-6 mb-3">
+    <div class="card" id="trabajo_id">
+        
+        <div class="<%= item.tipoTrabajo === 'Reparto' ? 'bg-primary' : 'bg-dark' %> mb-1 card-header d-flex justify-content-between text-white">
+            <p class="text-left">Tipo: <%= item.tipoTrabajo %></p>
+            <p class="text-right">ID# <%= item.id %></p>
+        </div>
+        <div class="card-body">
+            <p class="card-text border-bottom" id="camion">Camion: <%= item.camion %></p>
+            <p class="card-text border-bottom" id="fecha_comienzo">Inicio: <%= item.fechaInicio %> <%= item.horaInicio %> </p>
+            <p class="card-text border-bottom" id="hora_comienzo">Fin: <%= item.fechaFin %> <%= item.horaFin %> </p>
+            <p class="card-text border-bottom" id="conductor">Conductor: <%= item.conductor %></p>
+            <p class="<%= item.estadoTrabajo === 'Planificado' ? 'text-danger' : 'text-success' %> card-text border-bottom" 
+            id="conductor">Estado de trabajo: <%= item
+                        .estadoTrabajo %></p>
+            <p class="card-text border-bottom" id="conductor">Estado de pago: <%= item
+                        .estadoPago %></p>
+        </div>
+    </div>
+</div>

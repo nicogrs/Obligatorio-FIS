@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<% const current_page = 'buscador_trabajo' %>
+<%- include('./partials/header.ejs') %>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <%- include("./partials/nav.ejs",  { selected: current_page }) %>
+      <div class="col-md-9 ms-sm-auto col-lg-10 px-md-1">
+        <div class="row m-3">
+          <!-- <input type="text" id="myInput" onkeyup="myFilter()" placeholder="Buscar..."> -->
+          <label for="myInput">Buscar trabajo:</label>
+          <input type="text" id="myInput" placeholder="Buscar...">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle table-bordered table-striped-columns table-hover" id="myTable">
+            <% if (datos.length > 0) { %>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Inicio</th>
+                  <th>Fin</th>
+                  <th>Estado</th>
+                  <th>Direccion/es</th>
+                  <th>Camión</th>
+                  <th>Chofer</th>
+                  <th>Detalles</th>
+                  <th>Accion</th>
+                </tr>
+              </thead>
+              <tbody id="tabla_body">
+                <% datos.forEach(item => { %>
+                  <% if (item.tipoTrabajo == 'Flete') { %>
+                    <tr class="table-warning">
+                  <% } else if (item.tipoTrabajo == 'Reparto') { %>
+                    <tr class="table-info">
+                  <% } else { %>
+                    <tr>
+                  <% } %>  
+                    <td><%= item.id %></td>
+                    <td><%= item.tipoTrabajo %></td>
+                    <td><%= item.fechaInicio %> <%= item.horaInicio %> </td>
+                    <td><%= item.fechaFin %> <%= item.horaFin %> </td>
+                    <td><%= item.estadoTrabajo %></td>
+                    <td><%= item.direccion %></td>
+                    <td><%= item.camion %></td>
+                    <td><%= item.conductor %></td>
+                    <td> <button type="button" class="btn btn-success m-1"
+                      data-bs-toggle="modal" data-bs-target="#modalDetalle"
+                      data_id="<%= item.id %>"
+                      name="btn_detalle">Detalles</button> </td>
+                    <td> <button type="button" class="btn btn-info m-1"
+                      data_id="<%= item.id %>"
+                      name="btn_editar">Editar</button> </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+              <% } else { %>
+                <p>Nada que mostrar</p>
+              <% } %>
+          </table>
+        </div>
+        <div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" id="modal-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/common_footer.ejs', {current_page: current_page}) %>
+
+</body>

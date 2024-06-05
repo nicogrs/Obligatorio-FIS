@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<% const current_page = 'tabla_camiones' %>
+<%- include('./partials/header.ejs') %>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <%- include("./partials/nav.ejs",  { selected: current_page }) %>
+      <div class="col-md-9 ms-sm-auto col-lg-10 px-md-1">
+        <div class="row m-3">
+          <table class="table align-middle table-bordered table-hover" id="tablaCamiones">
+            <% if (listaCamiones.length > 0) { %>
+              <thead class="text-bg-dark text-white">
+                <tr>
+                  <th>ID</th>
+                  <th>Modelo</th>
+                  <th>Matricula</th>
+                  <th>Fecha de adquirido</th>
+                </tr>
+              </thead>
+              <tbody id="tabla_body">
+                <% listaCamiones.forEach(item => { %>
+                    <tr>
+                    <td><%= item.id %></td>
+                    <td><%= item.modelo %></td>
+                    <td><%= item.matricula %> </td>
+                    <td><%= item.fecha %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+              <% } else { %>
+                <p>Nada que mostrar</p>
+              <% } %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/common_footer.ejs', {current_page: current_page}) %>
+
+</body>

@@ -1,0 +1,344 @@
+7<!DOCTYPE html>
+<html lang="es">
+
+<% const current_page = 'editor_trabajo' %>
+<%- include('./partials/header.ejs') %>
+
+<body>
+  <div class="container-fluid position-relative">
+    <div class="row">
+      <%- include("./partials/nav.ejs", { selected: current_page }) %>
+      <div class="col-md-9 ms-sm-auto col-lg-10 d-flex align-items-center justify-content-center flex-column">
+        <div class="border border-0 bg-light rounded m-3 p-3">
+        <h1 class="text-center">Editor de trabajo</h1>
+        <div class="row align-items-center">
+          <div>
+            <label for="dropEstado" class="form-label">Seleccionar estado</label>
+          </div>
+          <form id="editarEstado" action="/editor_trabajo" method="post">
+            <input type="hidden" id="IDTrabajoEstado" name="trabajoID" value="<%= trabajo.id %>">
+            <div class="row">
+
+                <% if (estados.length > 0) { %>
+                  <div class="col-7">
+
+                    <select id="dropEstado" name="estadoTrabajo" class="form-select mb-3" aria-label="Seleccion estado">
+                      <% estados.forEach(item => { %>
+                        <option value="<%= item %>">
+                          <%= item %>
+                        </option>
+                      <% }); %>
+                    </select>
+
+                  </div>
+                  <div class="col-3">
+
+                    <button type="button" id="btn_aplicar_estado" class="btn btn-primary">Aplicar</button>
+                  </div>
+                <% } %>
+
+
+            </div>
+            
+    <div class="modal fade bd-example-modal-sm" id="confirmarEstado" 
+    tabindex="-1" role="dialog" aria-hidden="false">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ¿Desea cambiar el estado para el trabajo seleccionado?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            <button type="submit" id="botonGuardarEstado" data-bs-dismiss="modal" class="btn btn-primary">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>
+          </form>
+        </div>
+
+
+        <div class="row">
+          <div>
+            <label for="dropCamion" class="form-label">Seleccionar camión</label>
+          </div>
+          <form id="editarCamion" action="/editor_trabajo" method="post">
+            <input type="hidden" id="trabajoID" name="trabajoID" value="<%= trabajo.id %>">
+            <div class="row">
+              <% if (camiones.length > 0) { %>
+                <div class="col-7">
+                  <select id="dropCamion" name="camion" class="form-select mb-3" aria-label="Seleccion estado">
+                    <% camiones.forEach(item => { %>
+                      <option value="<%= item.id %>">
+                        <%= item %>
+                      </option>
+                    <% }); %>
+                  </select>
+                </div>
+              <% } %>
+              <div class="col-3">
+                <button type="button" id="btn_aplicar_camion" class="btn btn-primary" >Aplicar</button>
+              </div>
+            </div>
+            
+            <div class="modal fade bd-example-modal-sm" id="confirmarCamion" 
+            tabindex="-1" role="dialog" aria-hidden="false">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Desea cambiar el camión para el trabajo seleccionado?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" id="botonGuardarCamion" data-bs-dismiss="modal" class="btn btn-primary">Guardar cambios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </form>
+        </div>
+
+        <br>
+        <h4>Detalles de trabajo seleccionado</h4>
+
+        <div class="row">
+          <div class="col-auto">
+            <label for="id">ID de trabajo:</label>
+          </div>
+          <div class="col-auto">
+            <input id="id" type="text" value="<%= trabajo.id %>" readonly>
+          </div>
+
+        </div>
+
+        <% if (trabajo.tipoTrabajo == 'Flete' ) { %>
+
+          <% const trabajo_id=trabajo.id %>
+          <% const fecha_inicio=trabajo.fechaInicio%>
+          <% const hora_inicio=trabajo.horaInicio %>
+          <% const fecha_fin=trabajo.fechaFin%>
+          <% const hora_fin=trabajo.horaFin%>
+          <% const camion=trabajo.camion %>
+          <% const descripcion=trabajo.descripcion %>
+          <% const direccion=trabajo.direcciones %>
+          <% const nombre=trabajo.nombre %>
+
+          <div class="row mb-1" style="text-align: left;">
+            <div class="col-auto">
+              <label for="nombreCliente">Nombre Cliente:</label>
+            </div>
+            <div class="col-9">
+              <p id="nombreCliente"><%= nombre %></p>
+            </div>
+          </div>
+
+          <div class="row mb-1">
+            <div class="col-auto">
+              <label for="direccionCliente">Dirección Cliente:</label>
+            </div>
+            <div class="col-9">
+              <p id="direccionCliente"><%= direccion %></p>
+            </div>
+          </div>
+
+          <div class="row mb-1" style="text-align: left;">
+            <div class="col-auto">
+              <label for="fechaHoraInicio">Fecha y Hora de inicio:</label>
+            </div>
+            <div class="col-9">
+              <p id="fechaHoraInicio"><%= fecha_inicio %> <%= hora_inicio %></p>
+            </div>
+          </div>
+
+          <div class="row mb-1" style="text-align: left;">
+            <div class="col-auto">
+              <label for="fechaHoraFin">Fecha y Hora de fin:</label>
+            </div>
+            <div class="col-9">
+              <p id="fechaHoraFin"><%= fecha_fin%> <%= hora_fin%></p>
+            </div>
+          </div>
+
+          <div class="row mb-1" style="text-align: left;">
+            <div class="col-auto">
+              <label for="chofer_flete">Chofer:</label>
+            </div>
+            <div class="col-9">
+              <p id="chofer_flete"><%= chofer%></p>
+            </div>
+          </div>
+
+          <div class="row mb-1" style="text-align: left;">
+            <div class="col-auto">
+              <label for="desc_flete">Descripción:</label>
+            </div>
+            <div class="col-9">
+              <p id="desc_flete"><%= descripcion%></p>
+            </div>
+          </div>
+
+        <% } else { %>
+
+          <% const fecha_inicio=trabajo.fechaInicio%>
+          <% const hora_inicio=trabajo.horaInicio%>
+          <% const fecha_fin=trabajo.fechaFin %>
+          <% const hora_fin=trabajo.horaFin %>
+          <% const camion=trabajo.camion %>
+          <% const descripcion=trabajo.descripcion %>
+          <% const direcciones=trabajo.direcciones %>
+
+            <div class="row mb-1" style="text-align: left;">
+              <div class="col-auto">
+                <label for="fechaHoraInicio">Fecha y Hora de inicio:</label>
+              </div>
+              <div class="col-9">
+                <p id="fechaHoraInicio"><%= fecha_inicio %> <%= hora_inicio %></p>
+              </div>
+            </div>
+
+            <div class="row mb-1" style="text-align: left;">
+              <div class="col-auto">
+                <label for="fechaHoraFin">Fecha y Hora de fin:</label>
+              </div>
+              <div class="col-9">
+                <p id="fechaHoraFin"><%= fecha_fin%> <%= hora_fin%></p>
+              </div>
+            </div>
+
+            <div class="row mb-1" style="text-align: left;">
+              <div class="col-auto">
+                <label for="chofer_flete">Chofer:</label>
+              </div>
+              <div class="col-9">
+                <p id="chofer_flete"><%= chofer%></p>
+              </div>
+            </div>
+
+            <div class="row mb-1" style="text-align: left;">
+              <div class="col-auto">
+                <label for="desc_flete">Descripción:</label>
+              </div>
+              <div class="col-9">
+                <p id="desc_flete"><%= descripcion%></p>
+              </div>
+            </div>
+          <% } %>
+         <div class="row mb-1">
+          <div class="col-auto mx-auto text-center">
+            <button type="button" id="btn_cancel" class="btn btn-secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/common_footer.ejs', {current_page: current_page}) %>
+
+  <script>
+    /* eslint-disable max-len */
+    document.addEventListener('DOMContentLoaded', function () {
+      const cancelBtn = document.getElementById('btn_cancel');
+      const aplicarBtnEst = document.getElementById('btn_aplicar_estado');
+      const aplicarBtnCam = document.getElementById('btn_aplicar_camion');
+      const dropdownEst = document.getElementById('dropEstado');
+      const dropdownCam = document.getElementById('dropCamion');
+      const id_value = document.getElementById('id').value;
+      const guardarBtnCam = document.getElementById('botonGuardarCamion');
+      const guardarBtnEst = document.getElementById('botonGuardarEstado');
+      const mensajeModalCamion = new bootstrap.Modal(document.getElementById('confirmarCamion'));
+      const mensajeModalEstado = new bootstrap.Modal(document.getElementById('confirmarEstado'));
+
+      /* Agrego comportamiento a los botones de cancelar */
+      //comportamientoCancelar(cancelBtn);
+
+      // window.addEventListener('beforeunload', function (event) {
+      //   // Customize the confirmation message
+      //   event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+      // });
+
+      cancelBtn.addEventListener('click', function() {
+        window.location.href = '/';
+      });
+
+      guardarBtnEst.addEventListener('click', function() {
+        const object = {};
+        const value = dropdownEst.value;
+        // console.log('selectEstado ' + value);
+        const _json = crearJSON(id_value, value, 'estado');
+        // console.log(_json);
+        enviarPOST(_json);
+      });
+
+      aplicarBtnEst.addEventListener('click', function() {
+        mensajeModalEstado.show();
+      });
+
+      aplicarBtnCam.addEventListener('click', function() {
+        mensajeModalCamion.show();
+      });
+
+      guardarBtnCam.addEventListener('click', function() {
+        const object = {};
+        const value = dropdownCam.value;
+        // console.log('selectCamion ' + value);
+        const _json = crearJSON(id_value, value, 'camion');
+        // console.log(_json);
+        enviarPOST(_json);
+      });
+
+    });
+
+    function enviarPOST(data) {
+      fetch('/post_actualizar_trabajo', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((response) => response.text())
+        .then((data) => {
+          // console.log(data);
+          document.getElementById('modal-content').innerHTML = data;
+        })
+        .catch((error) => {
+          // console.log(error);
+          console.error('Error submitting data:', error);
+        });
+    }
+
+    function crearJSON(id, data, tipo){
+      object = {};
+      object.id = id;
+      object.tipo_cambio = tipo;
+      object.dato = data;
+      return JSON.stringify(object);
+    }
+
+    // // Function to show the custom alert for 5 seconds
+    // function showCustomAlertForFiveSeconds() {
+    //   const customAlert = document.getElementById('myCustomAlert');
+    //   customAlert.style.display = 'flex'; // Display the alert
+
+    //   // Hide the alert after 5 seconds
+    //   setTimeout(function () {
+    //     customAlert.style.display = 'none';
+    //   }, 5000); // 5 seconds in milliseconds
+    // }
+
+    // // Call the function to display the custom alert
+    // showCustomAlertForFiveSeconds();
+  </script>
+
+</body>
+
+</html>

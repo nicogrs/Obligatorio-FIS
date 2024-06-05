@@ -1,0 +1,42 @@
+<!-- <div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+    <!-- <div class="modal-dialog"> -->
+        <!-- <div class="modal-content"> -->
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> 
+            <div class="modal-body">
+                
+                <p>Trabajo ID: <%= trabajo.id %></p>
+                <% if (trabajo.tipoTrabajo == 'Flete') { %>
+                    <p>Nombre cliente: <%= trabajo.nombre %> </p>
+                    <p>Fecha y Hora inicio: <%= trabajo.fechaInicio %> <%= trabajo.horaInicio %></p>
+                    <p>Fecha y Hora finalización: <%= trabajo.fechaFin %> <%= trabajo.horaFin %></p>
+                    <p>Conductor: <%= trabajo.conductor %></p>
+                    <p>Camion: <%= trabajo.camion %></p>
+                    <p>Estado: <%= trabajo.estadoTrabajo %></p>
+                    <p>Dirección Inicio: <%= trabajo.direccionIni %></p>
+                    <p>Dirección Final: <%= trabajo.direccionFin %></p>
+                    <p>Descripción: <%= trabajo.descripcion %>
+                <% } else { %>
+                    <p>Fecha y Hora inicio: <%= trabajo.fechaInicio %> <%= trabajo.horaInicio %></p>
+                    <p>Fecha y Hora finalización: <%= trabajo.fechaFin %> <%= trabajo.horaFin %></p>
+                    <p>Conductor: <%= trabajo.conductor %></p>
+                    <p>Camion: <%= trabajo.camion %></p>
+                    <p>Estado: <%= trabajo.estadoTrabajo %></p>
+                    <p>Direcciones: </p>
+                    <% if (trabajo.direcciones.length > 0) { %>
+                        <hr>
+                        <% trabajo.direcciones.forEach(item => { %>
+                            <p> • <%= item %></p>
+                        <% }) %>
+                        <hr>
+                    <% } %>
+                    <p>Descripción: <%= trabajo.descripcion %>
+                <% } %>
+            </div>
+
+            </div>
+        <!-- </div> -->
+    <!-- </div> -->
+<!-- </div> -->
