@@ -15,7 +15,7 @@ const estadoTrabajo = init.enums.estadoTrabajo;
 const app = express();
 
 // listen for requests
-app.listen(3000);
+app.listen(8080);
 });
 
 const arrTrabajos = init.controladorTrabajo.arrTrabajos;
