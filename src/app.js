@@ -2,7 +2,6 @@
 const express = require('express');
 const path = require('path');
 const init = require('./public/iniciador');
-const port = process.env.PORT || 3000;
 // const reqParse = require('./models/requestParser');
 // const {arrTrabajos} = require('./models/controladorTrabajo');
 // const {actualizarTrabajo} = require('./models/controladorTrabajo');
@@ -16,8 +15,7 @@ const estadoTrabajo = init.enums.estadoTrabajo;
 const app = express();
 
 // listen for requests
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(3000);
 });
 
 const arrTrabajos = init.controladorTrabajo.arrTrabajos;
